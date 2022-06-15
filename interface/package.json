@@ -14,17 +14,20 @@
   "dependencies": {
     "@material-ui/core": "^4.0.1",
     "@material-ui/icons": "^4.11.2",
+    "@types/json-bigint": "^1.0.1",
     "install": "^0.13.0",
     "json-bigint": "^1.0.0",
     "npm": "^7.19.1",
     "qs": "^6.10.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1",
-    "react-spinners": "^0.11.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.0.5",
+    "react-scripts": "^5.0.1",
+    "react-spinners": "^0.11.0",
+    "typescript": "^4.7.3"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
+    "@types/react-dom": "^18.0.5",
     "gh-pages": "^3.2.3"
   },
   "eslintConfig": {

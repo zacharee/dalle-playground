@@ -1,9 +1,9 @@
 import {PulseLoader} from "react-spinners";
-import {Typography} from "@material-ui/core";
+import {createStyles, Typography} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
 
-const useStyles = () => ({
+const styles = createStyles({
     root: {
         display: 'flex',
         flexDirection: 'column',
@@ -17,7 +17,11 @@ const useStyles = () => ({
 
 const processingSteps = ['Generating images 👨🏽‍🎨', 'Doing fancy calculations ✨'];
 
-const LoadingSpinner = ({classes, isLoading}) => {
+interface Props extends WithStyles<typeof styles> {
+    isLoading: boolean
+}
+
+const LoadingSpinner = ({classes, isLoading}: Props) => {
     const [textIdx, setTextIdx] = useState(0);
 
     useEffect(() => {
@@ -35,10 +39,10 @@ const LoadingSpinner = ({classes, isLoading}) => {
     const loadingText = processingSteps[textIdx % processingSteps.length];
     return (
         <div className={classes.root}>
-            <PulseLoader sizeUnit={"px"} size={20} color="purple" loading={isLoading}/>
+            <PulseLoader size={20} color="purple" loading={isLoading}/>
             <Typography className={classes.loadingText} variant={"h6"}>{loadingText}</Typography>
         </div>
     )
 }
 
-export default withStyles(useStyles)(LoadingSpinner)
+export default withStyles(styles)(LoadingSpinner)

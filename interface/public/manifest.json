@@ -2,7 +2,7 @@
   "short_name": "DALL-E Playground",
   "name": "DALL-E Playground",
   "icons": [],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

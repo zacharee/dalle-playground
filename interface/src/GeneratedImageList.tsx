@@ -1,23 +1,27 @@
 import React from 'react';
-import { Grid } from "@material-ui/core";
-import withStyles from "@material-ui/core/styles/withStyles";
+import {createStyles, Grid} from "@material-ui/core";
+import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
 
-const useStyles = () => ({
+const styles = createStyles({
     generatedImg: {
         borderRadius: '8px',
     },
 });
 
-const GeneratedImageList = ({ classes, generatedImages, promptText }) => {
+interface Props extends WithStyles<typeof styles> {
+    generatedImages: Array<string>,
+    promptText: string
+}
 
-    const ImageObject = ({ imgData, promptText, index }) => {
+const GeneratedImageList = ({ classes, generatedImages, promptText }: Props) => {
+    const ImageObject = ({ imgData, promptText, index }: { imgData: string, promptText: string, index: number }) => {
         const imgSrc = `data:image/png;base64,${imgData}`
         const alt = `${promptText} ${index}`
         const title= "Download image"
         const downloadedFilename = promptText + "_" + index + ".jpeg"
-        
+
         return (
-            <a href={imgSrc} alt={alt} title={title} download={downloadedFilename}>
+            <a href={imgSrc} title={title} download={downloadedFilename}>
                 <img src={imgSrc} className={classes.generatedImg} alt={alt} title={title} />
             </a>
         )
@@ -26,7 +30,7 @@ const GeneratedImageList = ({ classes, generatedImages, promptText }) => {
 
     return (
         <Grid container alignItems="center" spacing={3}>
-            {generatedImages.map((generatedImg, index) => {
+            {generatedImages.map((generatedImg: string, index: number) => {
                 return (
                     <Grid item key={index}>
                         <ImageObject imgData={generatedImg} promptText={promptText} index={++index}/>
@@ -37,4 +41,4 @@ const GeneratedImageList = ({ classes, generatedImages, promptText }) => {
     )
 }
 
-export default withStyles(useStyles)(GeneratedImageList)
+export default withStyles(styles)(GeneratedImageList)

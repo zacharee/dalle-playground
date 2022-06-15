@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import withStyles from "@material-ui/core/styles/withStyles";
+import React, {useState} from 'react';
+import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
 import {
-    Card, CardContent, FormControl, FormHelperText,
+    Card, CardContent, createStyles, FormControl, FormHelperText,
     InputLabel, MenuItem, Select, Typography
 } from "@material-ui/core";
 import { callDalleService } from "./backend_api";
@@ -12,7 +12,7 @@ import "./App.css";
 import BackendUrlInput from "./BackendUrlInput";
 import LoadingSpinner from "./LoadingSpinner";
 
-const useStyles = () => ({
+const styles = createStyles({
     root: {
         display: 'flex',
         width: '100%',
@@ -59,13 +59,14 @@ const useStyles = () => ({
     },
 });
 
+interface Props extends WithStyles<typeof styles> {}
 
-const App = ({ classes }) => {
+const App = ({ classes }: Props) => {
     const [backendUrl, setBackendUrl] = useState('');
     const [isFetchingImgs, setIsFetchingImgs] = useState(false);
     const [isCheckingBackendEndpoint, setIsCheckingBackendEndpoint] = useState(false);
     const [isValidBackendEndpoint, setIsValidBackendEndpoint] = useState(true);
-    const [generatedImages, setGeneratedImages] = useState([]);
+    const [generatedImages, setGeneratedImages] = useState<Array<string>>(new Array<string>());
     const [apiError, setApiError] = useState('')
     const [imagesPerQuery, setImagesPerQuery] = useState(2);
     const [queryTime, setQueryTime] = useState(0);
@@ -75,7 +76,7 @@ const App = ({ classes }) => {
     const imagesPerQueryOptions = 10
     const validBackendUrl = isValidBackendEndpoint && backendUrl
 
-    function enterPressedCallback(promptText) {
+    function enterPressedCallback(promptText: string) {
         console.log('API call to DALL-E web service with the following prompt [' + promptText + ']');
         setApiError('')
         setIsFetchingImgs(true)
@@ -141,7 +142,7 @@ const App = ({ classes }) => {
                                 <Select labelId="images-per-query-label"
                                         label="Images per text prompt" value={imagesPerQuery}
                                         disabled={isFetchingImgs}
-                                        onChange={(event) => setImagesPerQuery(event.target.value)}>
+                                        onChange={(event) => setImagesPerQuery(event.target.value as number)}>
                                     {Array.from(Array(imagesPerQueryOptions).keys()).map((num) => {
                                         return <MenuItem key={num + 1} value={num + 1}>
                                             {num + 1}
@@ -166,4 +167,4 @@ const App = ({ classes }) => {
     )
 }
 
-export default withStyles(useStyles)(App);
+export default withStyles(styles)(App);
