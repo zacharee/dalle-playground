@@ -7,9 +7,9 @@ export async function callDalleService(backendUrl: string, text: string, numImag
     const response = await Promise.race([
         (await fetch(backendUrl + `/dalle`, {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: {
                     'Bypass-Tunnel-Reminder': "go",
-                    'mode': 'no-cors'
                 },
                 body: JSON.stringify({
                     text,
@@ -38,9 +38,9 @@ export async function checkIfValidBackend(backendUrl: string, controller: AbortC
 
     return await fetch(backendUrl, {
         signal,
+        mode: 'no-cors',
         headers: {
             'Bypass-Tunnel-Reminder': "go",
-            'mode': 'no-cors'
         },
     }).then(() => {
         return true
