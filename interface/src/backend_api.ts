@@ -1,13 +1,12 @@
 import JsonBigint from "json-bigint";
 
-const REQUEST_TIMEOUT_SEC = 60000
+const REQUEST_TIMEOUT_SEC = 6000000
 
 export async function callDalleService(backendUrl: string, text: string, numImages: number) {
     const queryStartTime = new Date()
     const response = await Promise.race([
         (await fetch(backendUrl + `/dalle`, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Bypass-Tunnel-Reminder': "go",
                 },
@@ -17,6 +16,7 @@ export async function callDalleService(backendUrl: string, text: string, numImag
                 })
             }
         ).then((response) => {
+            console.error(response)
             if (!response.ok) {
                 throw Error(response.statusText);
             }
@@ -37,7 +37,7 @@ export async function checkIfValidBackend(backendUrl: string, controller: AbortC
     const signal = controller.signal
 
     return await fetch(backendUrl, {
-        signal,
+        signal: signal,
         mode: 'no-cors',
         headers: {
             'Bypass-Tunnel-Reminder': "go",
