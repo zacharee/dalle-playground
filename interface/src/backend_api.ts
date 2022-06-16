@@ -16,7 +16,6 @@ export async function callDalleService(backendUrl: string, text: string, numImag
                 })
             }
         ).then((response) => {
-            console.error(response)
             if (!response.ok) {
                 throw Error(response.statusText);
             }
